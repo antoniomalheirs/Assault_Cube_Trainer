@@ -57,5 +57,20 @@ namespace experimental_hack_ac
             pid = game.GetProcIdFromName("ac_client.exe");
             return pid;
         }
+        public int getPbullets()
+        {
+            pbulletss = game.ReadInt(playerobject + pbullets);
+            return pbulletss;
+        }
+        public int getExplosive()
+        {
+            explosivee = game.ReadInt(playerobject + explosive);
+            return explosivee;
+        }
+        public float getX()
+        {
+            Xx = game.ReadFloat(playerobject + X);
+            return Xx;
+        }
     }
 }
