@@ -115,10 +115,42 @@ namespace experimental_hack_ac
 
                             if (key.Key == ConsoleKey.NumPad3)
                             {
+                                // Inverte o estado da função
+                                pad3 = !pad3;
+
+                                if (pad3)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Pistol Bullets infinito ativada");
+                                    injetor.Frezpbullets("30");
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    injetor.Frezpbullets("15");
+                                    Console.WriteLine("Pistol Bullets desativada");
+                                    injetor.Unfrezpbullets();
+                                }
                             }
 
                             if (key.Key == ConsoleKey.NumPad4)
                             {
+                                // Inverte o estado da função
+                                pad4 = !pad4;
+
+                                if (pad4)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Explosive infinito ativada");
+                                    injetor.Frezexplosive("10");
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    injetor.Frezexplosive("0");
+                                    Console.WriteLine("Explosive desativada");
+                                    injetor.Unfrezexplosive();
+                                }
                             }
 
                             if (key.Key == ConsoleKey.NumPad5)
