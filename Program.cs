@@ -16,7 +16,8 @@ namespace experimental_hack_ac
         {
             ConsoleKeyInfo key;
             Process gameProcess;
-            Mem game = new Mem();
+            Player currentp = new Player();
+            FunctionsHack injetor;
 
             int pid;
             bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false;
@@ -26,11 +27,12 @@ namespace experimental_hack_ac
             {
                 while (!processRunning)
                 {
-                    pid = game.GetProcIdFromName("ac_client.exe");
+                    pid = currentp.getPid();
 
                     if (pid != 0)
                     {
                         // Iniciar o processo do jogo
+                        injetor = new FunctionsHack();
 
                         gameProcess = Process.GetProcessById(pid);
                         gameProcess.EnableRaisingEvents = true;
@@ -47,6 +49,8 @@ namespace experimental_hack_ac
 
                         do
                         {
+                            currentp = new Player();
+
                             key = Console.ReadKey();
 
                             if (key.Key == ConsoleKey.NumPad0)
