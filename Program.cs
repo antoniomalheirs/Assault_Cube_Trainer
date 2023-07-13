@@ -55,14 +55,62 @@ namespace experimental_hack_ac
 
                             if (key.Key == ConsoleKey.NumPad0)
                             {
+                                // Inverte o estado da função
+                                pad0 = !pad0;
+
+                                if (pad0)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Vida infinita ativada");
+                                    injetor.Frezhealth("570");
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    injetor.Frezhealth("100");
+                                    Console.WriteLine("Vida desativada");
+                                    injetor.Unfrezhealth();
+                                }
                             }
 
                             if (key.Key == ConsoleKey.NumPad1)
                             {
+                                // Inverte o estado da função
+                                pad1 = !pad1;
+
+                                if (pad1)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Shield infinito ativada");
+                                    injetor.Frezshield("100");
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    injetor.Frezshield("0");
+                                    Console.WriteLine("Shield desativada");
+                                    injetor.Unfrezshield();
+                                }
                             }
 
                             if (key.Key == ConsoleKey.NumPad2)
                             {
+                                // Inverte o estado da função
+                                pad2 = !pad2;
+
+                                if (pad2)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Bullets infinitas ativada");
+                                    injetor.Frezbullets("60");
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    injetor.Frezbullets("25");
+                                    Console.WriteLine("Bullets desativada");
+                                    injetor.Unfrezbullets();
+                                }
                             }
 
                             if (key.Key == ConsoleKey.NumPad3)
@@ -84,6 +132,7 @@ namespace experimental_hack_ac
                         while (processRunning);
 
                         pad0 = false; pad1 = false; pad2 = false; pad3 = false; pad4 = false; pad5 = false; pad6 = false;
+                        injetor.Unfrezhealth(); injetor.Unfrezshield(); injetor.Unfrezbullets();
                         Console.Clear();
                     }
                     else
