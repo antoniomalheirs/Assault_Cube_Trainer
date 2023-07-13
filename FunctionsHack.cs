@@ -19,7 +19,6 @@ namespace experimental_hack_ac
             pid = game.GetProcIdFromName("ac_client.exe");
             game.OpenProcess(pid);
         }
-
         public void Frezhealth(string health)
         {
             game.FreezeValue((player.playerobject + player.health), "int", health);
@@ -43,6 +42,30 @@ namespace experimental_hack_ac
         public void Unfrezbullets()
         {
             game.UnfreezeValue(player.playerobject + player.bullets);
+        }
+        public void Frezpbullets(string pbullets)
+        {
+            game.FreezeValue((player.playerobject + player.pbullets), "int", pbullets);
+        }
+        public void Unfrezpbullets()
+        {
+            game.UnfreezeValue(player.playerobject + player.pbullets);
+        }
+        public void Frezexplosive(string explosive)
+        {
+            game.FreezeValue((player.playerobject + player.explosive), "int", explosive);
+        }
+        public void Unfrezexplosive()
+        {
+            game.UnfreezeValue(player.playerobject + player.explosive);
+        }
+        public void FrezX()
+        {
+            game.FreezeValue((player.playerobject + player.X), "float", player.getX().ToString());
+        }
+        public void UnfrezX()
+        {
+            game.UnfreezeValue((player.playerobject + player.X));
         }
     }
 }
