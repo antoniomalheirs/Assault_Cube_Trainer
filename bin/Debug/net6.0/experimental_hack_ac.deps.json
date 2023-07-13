@@ -1,0 +1,57 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "experimental_hack_ac/1.0.0": {
+        "dependencies": {
+          "Memory.dll.x64": "1.2.24",
+          "swed32": "1.1.0"
+        },
+        "runtime": {
+          "experimental_hack_ac.dll": {}
+        }
+      },
+      "Memory.dll.x64/1.2.24": {
+        "runtime": {
+          "lib/netstandard2.0/Memory.dll": {
+            "assemblyVersion": "1.2.24.0",
+            "fileVersion": "1.2.24.0"
+          }
+        }
+      },
+      "swed32/1.1.0": {
+        "runtime": {
+          "lib/net6.0/swed32.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "experimental_hack_ac/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Memory.dll.x64/1.2.24": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fjpioQZXMFn5OoFJ2nPqhokBT0OMzH59PMiol0wP0TF0v3XL3cRFwgu/4C9tvwEs1Qxv5WeHcjw6S+z2zgpvRQ==",
+      "path": "memory.dll.x64/1.2.24",
+      "hashPath": "memory.dll.x64.1.2.24.nupkg.sha512"
+    },
+    "swed32/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fZWXefUAxSrMyqIjMQTUdRVvbUgTdtcx9HBU9eYwZEqzkKOmrj8NeRCGOl+W3+sEQebQHHisylLn7n2aWqKCbw==",
+      "path": "swed32/1.1.0",
+      "hashPath": "swed32.1.1.0.nupkg.sha512"
+    }
+  }
+}

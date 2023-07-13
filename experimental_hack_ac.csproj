@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Memory.dll.x64" Version="1.2.24" />
+    <PackageReference Include="swed32" Version="1.1.0" />
+  </ItemGroup>
+
 </Project>
