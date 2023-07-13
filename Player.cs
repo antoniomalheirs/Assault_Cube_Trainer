@@ -37,6 +37,21 @@ namespace experimental_hack_ac
         {
             game.OpenProcess(getPid());
         }
+        public int getHealth()
+        {
+            healthh = game.ReadInt(playerobject + health);
+            return healthh;
+        }
+        public int getShield()
+        {
+            shieldd = game.ReadInt(playerobject + shield);
+            return shieldd;
+        }
+        public int getBullets()
+        {
+            bulletss = game.ReadInt(playerobject + bullets);
+            return bulletss;
+        }
         public int getPid()
         {
             pid = game.GetProcIdFromName("ac_client.exe");
