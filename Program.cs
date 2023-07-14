@@ -179,7 +179,7 @@ namespace experimental_hack_ac
                         while (processRunning);
 
                         pad0 = false; pad1 = false; pad2 = false; pad3 = false; pad4 = false; pad5 = false; pad6 = false;
-                        injetor.Unfrezhealth(); injetor.Unfrezshield(); injetor.Unfrezbullets();
+                        injetor.Unfrezhealth(); injetor.Unfrezshield(); injetor.Unfrezbullets(); injetor.Unfrezpbullets(); injetor.Unfrezexplosive(); injetor.UnfrezX(); injetor.UnfrezY(); injetor.UnfrezZ();
                         Console.Clear();
                     }
                     else
