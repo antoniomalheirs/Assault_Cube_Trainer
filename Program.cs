@@ -155,6 +155,21 @@ namespace experimental_hack_ac
 
                             if (key.Key == ConsoleKey.NumPad5)
                             {
+                                // Inverte o estado da função
+                                pad5 = !pad5;
+
+                                if (pad5)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Posicao travada ativada");
+                                    injetor.FrezX(); injetor.FrezY(); injetor.FrezZ();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Posicao desativada");
+                                    injetor.UnfrezX(); injetor.UnfrezY(); injetor.UnfrezZ();
+                                }
                             }
 
                             if (key.Key == ConsoleKey.NumPad6)
