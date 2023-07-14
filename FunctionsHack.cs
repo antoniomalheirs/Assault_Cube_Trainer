@@ -67,5 +67,21 @@ namespace experimental_hack_ac
         {
             game.UnfreezeValue((player.playerobject + player.X));
         }
+        public void FrezY()
+        {
+            game.FreezeValue((player.playerobject + player.Y), "float", player.getY().ToString());
+        }
+        public void UnfrezY()
+        {
+            game.UnfreezeValue((player.playerobject + player.Y));
+        }
+        public void FrezZ()
+        {
+            game.FreezeValue((player.playerobject + player.Z), "float", player.getZ().ToString());
+        }
+        public void UnfrezZ()
+        {
+            game.UnfreezeValue((player.playerobject + player.Z));
+        }
     }
 }
