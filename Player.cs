@@ -72,5 +72,15 @@ namespace experimental_hack_ac
             Xx = game.ReadFloat(playerobject + X);
             return Xx;
         }
+        public float getY()
+        {
+            Yy = game.ReadFloat(playerobject + Y);
+            return Yy;
+        }
+        public float getZ()
+        {
+            Zz = game.ReadFloat(playerobject + Zz);
+            return Zz;
+        }
     }
 }
