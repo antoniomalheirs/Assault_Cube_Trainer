@@ -17,6 +17,7 @@ namespace experimental_hack_ac
             ConsoleKeyInfo key;
             Process gameProcess;
             Player currentp = new Player();
+            Entitylist enemys;
             FunctionsHack injetor;
 
             int pid;
@@ -50,6 +51,7 @@ namespace experimental_hack_ac
                         do
                         {
                             currentp = new Player();
+                            enemys = new Entitylist();
 
                             key = Console.ReadKey();
 
@@ -174,6 +176,20 @@ namespace experimental_hack_ac
 
                             if (key.Key == ConsoleKey.NumPad6)
                             {
+                                // Inverte o estado da função
+                                pad6 = !pad6;
+
+                                if (pad6)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Lista ativada");
+                                    injetor.showEntitylist(enemys.getEntitybotList());
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Lista desativada");
+                                }
                             }
                         }
                         while (processRunning);
