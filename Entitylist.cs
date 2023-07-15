@@ -54,5 +54,20 @@ namespace experimental_hack_ac
             namee = Encoding.UTF8.GetString(game.ReadBytes(entityPtr, name, 16));
             return namee;
         }
+        public int getHealth()
+        {
+            healthh = game.ReadInt(entityPtr, health);
+            return healthh;
+        }
+        public int getTeam()
+        {
+            teamm = game.ReadInt(entityPtr, team);
+            return teamm;
+        }
+        public float getX()
+        {
+            Xx = game.ReadFloat(entityPtr, X);
+            return Xx;
+        }
     }
 }
