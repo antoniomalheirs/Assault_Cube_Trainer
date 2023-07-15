@@ -69,5 +69,38 @@ namespace experimental_hack_ac
             Xx = game.ReadFloat(entityPtr, X);
             return Xx;
         }
+        public float getY()
+        {
+            Yy = game.ReadFloat(entityPtr, Y);
+            return Yy;
+        }
+        public float getZ()
+        {
+            Zz = game.ReadFloat(entityPtr, Z);
+            return Zz;
+        }
+        public List<Enemy> getEntitybotList()
+        {
+            int botNumber = getBotnumber();
+            List<Enemy> list = new List<Enemy>();
+            Enemy enemy;
+            if (botNumber > 0)
+            {
+                for (int i = 1; i <= botNumber; i++)
+                {
+                    entityPtr = game.ReadPointer(basePtr, bot0 * i);
+                    namee = getName();
+                    healthh = getHealth();
+                    teamm = getTeam();
+                    Yy = getY();
+                    Xx = getX();
+                    Zz = getZ();
+
+                    enemy = new Enemy(getName(), getHealth(), getTeam(), getX(), getY(), getZ(), entityPtr);
+                    list.Add(enemy);
+                }
+            }
+            return list;
+        }
     }
 }
