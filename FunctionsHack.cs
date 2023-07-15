@@ -83,5 +83,20 @@ namespace experimental_hack_ac
         {
             game.UnfreezeValue((player.playerobject + player.Z));
         }
+        public void showEntitylist(List<Enemy> list)
+        {
+            foreach (Enemy enemy in list)
+            {
+                Console.WriteLine("------------------------");
+                Console.WriteLine("Enemy Pointer: " + enemy.getPointer());
+                Console.WriteLine("Name: " + enemy.getName());
+                Console.WriteLine("Health: " + enemy.getHealth());
+                Console.WriteLine("Team: " + enemy.getTeam());
+                Console.WriteLine("X: " + enemy.getX());
+                Console.WriteLine("Y: " + enemy.getY());
+                Console.WriteLine("Z: " + enemy.getZ());
+                Console.WriteLine("------------------------");
+            }
+        }
     }
 }
