@@ -64,14 +64,24 @@ namespace experimental_hack_ac
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Vida infinita ativada");
-                                    injetor.Frezhealth("570");
-                                }
-                                else
-                                {
-                                    Console.Clear();
-                                    injetor.Frezhealth("100");
-                                    Console.WriteLine("Vida desativada");
-                                    injetor.Unfrezhealth();
+
+                                    while (pad0)
+                                    {
+                                        injetor.Frezhealth(570);
+                                        // Aguarda um pequeno intervalo de tempo antes de verificar a condição novamente
+                                        Thread.Sleep(100);
+
+                                        if (Console.KeyAvailable)
+                                        {
+                                            key = Console.ReadKey(true);
+                                            if (key.Key == ConsoleKey.NumPad0)
+                                            {
+                                                Console.Clear();
+                                                Console.WriteLine("Vida desativada");
+                                                pad0 = false;
+                                            }
+                                        }
+                                    }
                                 }
                             }
 
@@ -84,12 +94,12 @@ namespace experimental_hack_ac
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Shield infinito ativada");
-                                    injetor.Frezshield("100");
+                                    injetor.Frezshield(100);
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    injetor.Frezshield("0");
+                                    injetor.Frezshield(0);
                                     Console.WriteLine("Shield desativada");
                                     injetor.Unfrezshield();
                                 }
@@ -104,12 +114,12 @@ namespace experimental_hack_ac
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Bullets infinitas ativada");
-                                    injetor.Frezbullets("60");
+                                    injetor.Frezbullets(60);
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    injetor.Frezbullets("25");
+                                    injetor.Frezbullets(25);
                                     Console.WriteLine("Bullets desativada");
                                     injetor.Unfrezbullets();
                                 }
@@ -124,12 +134,12 @@ namespace experimental_hack_ac
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Pistol Bullets infinito ativada");
-                                    injetor.Frezpbullets("30");
+                                    injetor.Frezpbullets(30);
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    injetor.Frezpbullets("15");
+                                    injetor.Frezpbullets(15);
                                     Console.WriteLine("Pistol Bullets desativada");
                                     injetor.Unfrezpbullets();
                                 }
@@ -144,12 +154,12 @@ namespace experimental_hack_ac
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Explosive infinito ativada");
-                                    injetor.Frezexplosive("10");
+                                    injetor.Frezexplosive(10);
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    injetor.Frezexplosive("0");
+                                    injetor.Frezexplosive(0);
                                     Console.WriteLine("Explosive desativada");
                                     injetor.Unfrezexplosive();
                                 }

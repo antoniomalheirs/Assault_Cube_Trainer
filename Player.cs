@@ -1,5 +1,6 @@
 ﻿using Memory;
 using System;
+using Swed32;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,18 +10,21 @@ namespace experimental_hack_ac
 {
     internal class Player
     {
-        private Mem game = new Mem();
+        private Swed game;
+        private Mem games = new Mem();
 
-        public string playerobject = "ac_client.exe+0017E0A8";
-        public string name = ",0x205";
-        public string health = ",0xEC";
-        public string shield = ",0xF0";
-        public string bullets = ",0x140";
-        public string pbullets = ",0x12C";
-        public string explosive = ",0x144";
-        public string Y = ",0x2C";
-        public string X = ",0x28";
-        public string Z = ",0x30";
+        public IntPtr basePtr;
+
+        public int playerobject = 0x0018AC00;
+        public int name = 0x205;
+        public int health = 0xEC;
+        public int shield = 0xF0;
+        public int bullets = 0x140;
+        public int pbullets = 0x12C;
+        public int explosive = 0x144;
+        public int Y = 0x2C;
+        public int X = 0x28;
+        public int Z = 0x30;
 
         private string namee = "";
         private int healthh;
@@ -35,51 +39,62 @@ namespace experimental_hack_ac
 
         public Player()
         {
-            game.OpenProcess(getPid());
+            game = new Swed("ac_client");
+            games.OpenProcess(getPid());
+            basePtr = game.ReadPointer(game.GetModuleBase(".exe"), playerobject); 
         }
+
         public int getHealth()
         {
-            healthh = game.ReadInt(playerobject + health);
+            healthh = game.ReadInt(basePtr, health);
             return healthh;
         }
+
         public int getShield()
         {
-            shieldd = game.ReadInt(playerobject + shield);
+            shieldd = game.ReadInt(basePtr, shield);
             return shieldd;
         }
+
         public int getBullets()
         {
-            bulletss = game.ReadInt(playerobject + bullets);
+            bulletss = game.ReadInt(basePtr, bullets);
             return bulletss;
         }
+
         public int getPid()
         {
-            pid = game.GetProcIdFromName("ac_client.exe");
+            pid = games.GetProcIdFromName("ac_client.exe");
             return pid;
         }
+
         public int getPbullets()
         {
-            pbulletss = game.ReadInt(playerobject + pbullets);
+            pbulletss = game.ReadInt(basePtr, pbullets);
             return pbulletss;
         }
+
         public int getExplosive()
         {
-            explosivee = game.ReadInt(playerobject + explosive);
+            explosivee = game.ReadInt(basePtr, explosive);
             return explosivee;
         }
+
         public float getX()
         {
-            Xx = game.ReadFloat(playerobject + X);
+            Xx = game.ReadFloat(basePtr, X);
             return Xx;
         }
+
         public float getY()
         {
-            Yy = game.ReadFloat(playerobject + Y);
+            Yy = game.ReadFloat(basePtr, Y);
             return Yy;
         }
+
         public float getZ()
         {
-            Zz = game.ReadFloat(playerobject + Zz);
+            Zz = game.ReadFloat(basePtr, Z);
             return Zz;
         }
     }

@@ -1,5 +1,7 @@
 ﻿using Memory;
+using Swed32;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,79 +12,99 @@ namespace experimental_hack_ac
     internal class FunctionsHack
     {
         private Mem game = new Mem();
+        private Swed games;
+
         private readonly Player player = new Player();
 
         private int pid;
 
         public FunctionsHack()
         {
+            games = new Swed("ac_client");
             pid = game.GetProcIdFromName("ac_client.exe");
             game.OpenProcess(pid);
         }
-        public void Frezhealth(string health)
+
+        public void Frezhealth(int health)
         {
-            game.FreezeValue((player.playerobject + player.health), "int", health);
+             games.WriteInt(player.basePtr + player.health, health);
         }
+
         public void Unfrezhealth()
         {
-            game.UnfreezeValue(player.playerobject + player.health);
+            games.WriteInt(player.basePtr + player.health, 100);
         }
-        public void Frezshield(string shield)
+
+        public void Frezshield(int shield)
         {
-            game.FreezeValue((player.playerobject + player.shield), "int", shield);
+            games.WriteInt(player.basePtr + player.shield, shield);
         }
+
         public void Unfrezshield()
         {
-            game.UnfreezeValue(player.playerobject + player.shield);
+            games.WriteInt(player.basePtr + player.shield, 0);
         }
-        public void Frezbullets(string bullets)
+
+        public void Frezbullets(int bullets)
         {
-            game.FreezeValue((player.playerobject + player.bullets), "int", bullets);
+            games.WriteInt(player.basePtr + player.bullets, bullets);
         }
+
         public void Unfrezbullets()
         {
-            game.UnfreezeValue(player.playerobject + player.bullets);
+            games.WriteInt(player.basePtr + player.bullets, 30);
         }
-        public void Frezpbullets(string pbullets)
+
+        public void Frezpbullets(int pbullets)
         {
-            game.FreezeValue((player.playerobject + player.pbullets), "int", pbullets);
+            games.WriteInt(player.basePtr + player.pbullets, pbullets);
         }
+
         public void Unfrezpbullets()
         {
-            game.UnfreezeValue(player.playerobject + player.pbullets);
+            games.WriteInt(player.basePtr + player.pbullets, 10);
         }
-        public void Frezexplosive(string explosive)
+
+        public void Frezexplosive(int explosive)
         {
-            game.FreezeValue((player.playerobject + player.explosive), "int", explosive);
+            games.WriteInt(player.basePtr + player.explosive, explosive);
         }
+
         public void Unfrezexplosive()
         {
-            game.UnfreezeValue(player.playerobject + player.explosive);
+            games.WriteInt(player.basePtr + player.explosive, 0);
         }
+
         public void FrezX()
         {
-            game.FreezeValue((player.playerobject + player.X), "float", player.getX().ToString());
+            games.WriteFloat(player.basePtr + player.X, player.getX());
         }
+
         public void UnfrezX()
         {
-            game.UnfreezeValue((player.playerobject + player.X));
+            games.WriteFloat(player.basePtr + player.X, player.getX());
         }
+
         public void FrezY()
         {
-            game.FreezeValue((player.playerobject + player.Y), "float", player.getY().ToString());
+            games.WriteFloat(player.basePtr + player.Y, player.getY());
         }
+
         public void UnfrezY()
         {
-            game.UnfreezeValue((player.playerobject + player.Y));
+            games.WriteFloat(player.basePtr + player.Y, player.getY());
         }
+
         public void FrezZ()
         {
-            game.FreezeValue((player.playerobject + player.Z), "float", player.getZ().ToString());
+            games.WriteFloat(player.basePtr + player.Z, player.getZ());
         }
+
         public void UnfrezZ()
         {
-            game.UnfreezeValue((player.playerobject + player.Z));
+            games.WriteFloat(player.basePtr + player.Z, player.getZ());
         }
+
         public void showEntitylist(List<Enemy> list)
         {
             foreach (Enemy enemy in list)
@@ -97,6 +119,20 @@ namespace experimental_hack_ac
                 Console.WriteLine("Z: " + enemy.getZ());
                 Console.WriteLine("------------------------");
             }
+        }
+
+        public void showPlayer()
+        {
+                Console.WriteLine("------------------------");
+                Console.WriteLine("Health: " + player.getHealth());
+                Console.WriteLine("Shield: " + player.getShield());
+                Console.WriteLine("Bullets: " + player.getBullets());
+                Console.WriteLine("pBullets: " + player.getPbullets());
+                Console.WriteLine("Bullets: " + player.getExplosive());
+                Console.WriteLine("X: " + player.getX());
+                Console.WriteLine("Y: " + player.getY());
+                Console.WriteLine("Z: " + player.getZ());
+                Console.WriteLine("------------------------");
         }
     }
 }

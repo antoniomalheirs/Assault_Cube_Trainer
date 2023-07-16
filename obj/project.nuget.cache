@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "2QUkUbIeGerZ9Gi3af8oQF3CI+2GfeU+y+LSG2DA/GNzTG5xq30BQ28BMYmsG7xs+Q/w7RQqCM56qc7n4WBg4g==",
+  "dgSpecHash": "VlO8xsi3hUgfup+spP8S5z8zdfwrPcQCof6GHDGs0379xR+hf9hVGkMaurOmTvCBNna9e8Kr4T96g1AkLCp38A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Anton\\OneDrive\\Área de Trabalho\\game\\experimental_hack_ac\\experimental_hack_ac.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Anton\\.nuget\\packages\\memory.dll.x64\\1.2.24\\memory.dll.x64.1.2.24.nupkg.sha512",
+    "C:\\Users\\Anton\\.nuget\\packages\\memory.dll.x86\\1.2.24\\memory.dll.x86.1.2.24.nupkg.sha512",
     "C:\\Users\\Anton\\.nuget\\packages\\swed32\\1.1.0\\swed32.1.1.0.nupkg.sha512"
   ],
   "logs": []

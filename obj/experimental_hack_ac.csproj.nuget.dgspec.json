@@ -40,7 +40,7 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Memory.dll.x64": {
+            "Memory.dll.x86": {
               "target": "Package",
               "version": "[1.2.24, )"
             },
