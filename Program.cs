@@ -10,8 +10,11 @@ using System.Numerics;
 
 namespace experimental_hack_ac
 {
-    public class Program
+    class Program
     {
+        static int pid;
+        static bool pad0, pad1, pad2, pad3, pad4, pad5, pad6;
+        static bool processRunning;
         static void Main()
         {
             ConsoleKeyInfo key;
@@ -20,9 +23,9 @@ namespace experimental_hack_ac
             Entitylist enemys;
             FunctionsHack injetor;
 
-            int pid;
-            bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false;
-            bool processRunning = false;
+            //int pid;
+            //bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false;
+            //bool processRunning = false;
 
             while (true)
             {
