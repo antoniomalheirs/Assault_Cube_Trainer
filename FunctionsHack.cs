@@ -129,7 +129,19 @@ namespace experimental_hack_ac
                 {
                     games.WriteInt(enemy.enemyPtr, enemy.health, life);
                 }
-                
+            }
+        }
+
+        public void setEntitylocation(List<Enemy> list)
+        {
+            foreach (Enemy enemy in list)
+            {
+                if (enemy.getTeam() == 1)
+                {
+                    games.WriteFloat(enemy.enemyPtr, enemy.X, enemy.Xx);
+                    games.WriteFloat(enemy.enemyPtr, enemy.Y, enemy.Yy);
+                    games.WriteFloat(enemy.enemyPtr, enemy.Z, enemy.Zz);
+                }
             }
         }
 

@@ -14,9 +14,9 @@ namespace experimental_hack_ac
         private string namee = "";
         public int healthh;
         private int teamm;
-        private float Xx;
-        private float Yy;
-        private float Zz;
+        public float Xx;
+        public float Yy;
+        public float Zz;
 
         public int name = 0x205;
         public int health = 0xEC;

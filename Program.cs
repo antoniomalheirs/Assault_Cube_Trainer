@@ -13,9 +13,9 @@ namespace experimental_hack_ac
 {
     class Program
     {
-        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun, listarun, enemyliferun;
+        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun, listarun, enemyliferun, enemylocationrun;
 
-        static CancellationTokenSource heatlhtask, shieldtask, bulletstask, pbulletstask, explosivetask, locationtask, listatask, enemylifetask;
+        static CancellationTokenSource heatlhtask, shieldtask, bulletstask, pbulletstask, explosivetask, locationtask, listatask, enemylifetask, enemylocationtask;
         static FunctionsHack injetor;
         static Entitylist enemys;
         static ConsoleKeyInfo key;
@@ -212,6 +212,25 @@ namespace experimental_hack_ac
                                     Console.Clear();
                                     Console.WriteLine("Enemy life desativada");
                                     StopEnemyliferun();
+                                }
+                            }
+
+                            if (key.Key == ConsoleKey.NumPad8)
+                            {
+                                // Inverte o estado da função
+                                pad7 = !pad7;
+
+                                if (!enemylocationrun)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Enemy location ativada");
+                                    Enemylocationrun();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Enemy location desativada");
+                                    StopEnemylocationrun();
                                 }
                             }
                         }
@@ -458,6 +477,36 @@ namespace experimental_hack_ac
                 enemylifetask.Cancel();
                 enemylifetask.Dispose();
                 enemylifetask = null;
+            }
+        }
+
+        private static void Enemylocationrun()
+        {
+            enemylocationtask = new CancellationTokenSource();
+            CancellationToken Kcancel = enemylocationtask.Token;
+            List<Enemy> enemyys = new List<Enemy>();
+            enemyys = enemys.getEntitybotList();
+            enemylocationrun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    injetor.setEntitylocation(enemyys);
+                    Thread.Sleep(10);
+                }
+
+                enemylocationrun = false;
+            });
+        }
+
+        private static void StopEnemylocationrun()
+        {
+            if (enemylocationrun)
+            {
+                enemylocationtask.Cancel();
+                enemylocationtask.Dispose();
+                enemylocationtask = null;
             }
         }
     }
