@@ -13,19 +13,20 @@ namespace experimental_hack_ac
 {
     class Program
     {
-        static int pid;
-        static bool pad0, pad1, pad2, pad3, pad4, pad5, pad6;
-        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun;
+        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun, listarun;
 
-        static CancellationTokenSource heatlhtask, shieldtask, bulletstask, pbulletstask, explosivetask, locationtask;
+        static CancellationTokenSource? heatlhtask, shieldtask, bulletstask, pbulletstask, explosivetask, locationtask, listatask;
         static FunctionsHack injetor;
+        static Entitylist enemys;
         static ConsoleKeyInfo key;
 
         static void Main()
         {
+            int pid;
+            bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false;
+
             Process gameProcess;
             Player currentp = new Player();
-            Entitylist enemys;
             
             while (true)
             {
@@ -181,16 +182,17 @@ namespace experimental_hack_ac
                                 // Inverte o estado da função
                                 pad6 = !pad6;
 
-                                if (pad6)
+                                if (!listarun)
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Lista ativada");
-                                    injetor.showEntitylist(enemys.getEntitybotList());
+                                    Listarun();
                                 }
                                 else
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Lista desativada");
+                                    StopListarun();
                                 }
                             }
                         }
@@ -366,7 +368,6 @@ namespace experimental_hack_ac
                 while (!Kcancel.IsCancellationRequested)
                 {
                     injetor.FrezX(x); injetor.FrezY(y); injetor.FrezZ(z);
-                    //Console.Clear();
                     Thread.Sleep(500);
                 }
 
@@ -381,6 +382,35 @@ namespace experimental_hack_ac
                 locationtask.Cancel();
                 locationtask.Dispose();
                 locationtask = null;
+            }
+        }
+
+        private static void Listarun()
+        {
+            listatask = new CancellationTokenSource();
+            CancellationToken Kcancel = listatask.Token;
+            listarun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    Console.Clear();
+                    injetor.showEntitylist(enemys.getEntitybotList());
+                    Thread.Sleep(500);
+                }
+
+                listarun = false;
+            });
+        }
+
+        private static void StopListarun()
+        {
+            if (listarun)
+            {
+                listatask.Cancel();
+                listatask.Dispose();
+                listatask = null;
             }
         }
     }
