@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Memory;
 using System.Runtime.InteropServices;
 using System.Numerics;
+using System.ComponentModel.Design;
 
 namespace experimental_hack_ac
 {
@@ -14,14 +15,17 @@ namespace experimental_hack_ac
     {
         static int pid;
         static bool pad0, pad1, pad2, pad3, pad4, pad5, pad6;
-        static bool processRunning;
+        static bool processRunning, healthrun;
+        static CancellationTokenSource cancellationTokenSource;
+        static FunctionsHack injetor;
+        static ConsoleKeyInfo key;
         static void Main()
         {
-            ConsoleKeyInfo key;
+            
             Process gameProcess;
             Player currentp = new Player();
             Entitylist enemys;
-            FunctionsHack injetor;
+            
 
             //int pid;
             //bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false;
@@ -65,26 +69,18 @@ namespace experimental_hack_ac
 
                                 if (pad0)
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine("Vida infinita ativada");
-
-                                    while (pad0)
+                                    if (!healthrun)
                                     {
-                                        injetor.Frezhealth(570);
-                                        // Aguarda um pequeno intervalo de tempo antes de verificar a condição novamente
-                                        Thread.Sleep(100);
-
-                                        if (Console.KeyAvailable)
-                                        {
-                                            key = Console.ReadKey(true);
-                                            if (key.Key == ConsoleKey.NumPad0)
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine("Vida desativada");
-                                                pad0 = false;
-                                            }
-                                        }
+                                        Console.Clear();
+                                        Console.WriteLine("Vida infinita ativada");
+                                        StartFunction();
                                     }
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Vida desativada");
+                                    StopFunction();
                                 }
                             }
 
@@ -218,6 +214,59 @@ namespace experimental_hack_ac
                         Thread.Sleep(3000);
                     }
                 }
+            }
+        }
+        private static void RunFunction()
+        {
+            healthrun = true;
+
+            while (healthrun == true)
+            {
+                injetor.Frezhealth(570);
+                // Aguarda um pequeno intervalo de tempo antes de verificar a condição novamente
+                Thread.Sleep(100);
+
+                if (Console.KeyAvailable)
+                {
+                    key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.NumPad0)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Vida desativada");
+                        healthrun = false;
+                        pad0 = false;
+                    }
+                }
+            }
+
+            healthrun = false;
+        }
+
+        private static void StartFunction()
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
+            healthrun = true;
+
+            Task.Run(() =>
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    injetor.Frezhealth(570);
+                    Thread.Sleep(100);
+                }
+
+                healthrun = false;
+            });
+        }
+
+        private static void StopFunction()
+        {
+            if (healthrun)
+            {
+                cancellationTokenSource.Cancel();
+                cancellationTokenSource.Dispose();
+                cancellationTokenSource = null;
             }
         }
     }
