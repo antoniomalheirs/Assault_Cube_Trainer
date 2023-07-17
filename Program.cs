@@ -443,8 +443,7 @@ namespace experimental_hack_ac
             {
                 while (!Kcancel.IsCancellationRequested)
                 {
-                    Console.Clear();
-                    enemys.setEntitylifeList(10);
+                    injetor.setEntitylife(enemys.getEntitybotList(),10);
                     Thread.Sleep(500);
                 }
 

@@ -121,6 +121,18 @@ namespace experimental_hack_ac
             }
         }
 
+        public void setEntitylife(List<Enemy> list, int life)
+        {
+            foreach (Enemy enemy in list)
+            {
+                if (enemy.getTeam() == 1)
+                {
+                    games.WriteInt(enemy.enemyPtr, enemy.health, life);
+                }
+                
+            }
+        }
+
         public void showPlayer()
         {
                 Console.WriteLine("------------------------");

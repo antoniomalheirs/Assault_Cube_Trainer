@@ -62,11 +62,6 @@ namespace experimental_hack_ac
             return healthh;
         }
 
-        public void setHealth(int life)
-        {
-            game.WriteInt(entityPtr, health, life);
-        }
-
         public int getTeam()
         {
             teamm = game.ReadInt(entityPtr, team);
@@ -113,22 +108,6 @@ namespace experimental_hack_ac
                 }
             }
             return list;
-        }
-
-        public void setEntitylifeList(int life)
-        {
-            if (getBotnumber() > 0)
-            {
-                for (int i = 1; i < getBotnumber(); i++)
-                {
-                    entityPtr = game.ReadPointer(basePtr + (bot0 * i));
-                    setHealth(life);
-                    healthh = getHealth();
-
-                    Task.Delay(100).Wait();
-                }
-            }
-
         }
     }
 }
