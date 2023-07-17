@@ -16,21 +16,17 @@ namespace experimental_hack_ac
         static int pid;
         static bool pad0, pad1, pad2, pad3, pad4, pad5, pad6;
         static bool processRunning, healthrun;
-        static CancellationTokenSource cancellationTokenSource;
+
+        static CancellationTokenSource heatlhtask;
         static FunctionsHack injetor;
         static ConsoleKeyInfo key;
+
         static void Main()
         {
-            
             Process gameProcess;
             Player currentp = new Player();
             Entitylist enemys;
             
-
-            //int pid;
-            //bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false;
-            //bool processRunning = false;
-
             while (true)
             {
                 while (!processRunning)
@@ -73,14 +69,14 @@ namespace experimental_hack_ac
                                     {
                                         Console.Clear();
                                         Console.WriteLine("Vida infinita ativada");
-                                        StartFunction();
+                                        Healthrun();
                                     }
                                 }
                                 else
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Vida desativada");
-                                    StopFunction();
+                                    StopHealthrun();
                                 }
                             }
 
@@ -216,41 +212,16 @@ namespace experimental_hack_ac
                 }
             }
         }
-        private static void RunFunction()
+        
+        private static void Healthrun()
         {
-            healthrun = true;
-
-            while (healthrun == true)
-            {
-                injetor.Frezhealth(570);
-                // Aguarda um pequeno intervalo de tempo antes de verificar a condição novamente
-                Thread.Sleep(100);
-
-                if (Console.KeyAvailable)
-                {
-                    key = Console.ReadKey(true);
-                    if (key.Key == ConsoleKey.NumPad0)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Vida desativada");
-                        healthrun = false;
-                        pad0 = false;
-                    }
-                }
-            }
-
-            healthrun = false;
-        }
-
-        private static void StartFunction()
-        {
-            cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
+            heatlhtask = new CancellationTokenSource();
+            CancellationToken Kcancel = heatlhtask.Token;
             healthrun = true;
 
             Task.Run(() =>
             {
-                while (!cancellationToken.IsCancellationRequested)
+                while (!Kcancel.IsCancellationRequested)
                 {
                     injetor.Frezhealth(570);
                     Thread.Sleep(100);
@@ -260,13 +231,14 @@ namespace experimental_hack_ac
             });
         }
 
-        private static void StopFunction()
+        private static void StopHealthrun()
         {
             if (healthrun)
             {
-                cancellationTokenSource.Cancel();
-                cancellationTokenSource.Dispose();
-                cancellationTokenSource = null;
+                injetor.Frezhealth(100);
+                heatlhtask.Cancel();
+                heatlhtask.Dispose();
+                heatlhtask = null;
             }
         }
     }
