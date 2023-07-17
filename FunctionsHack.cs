@@ -75,9 +75,9 @@ namespace experimental_hack_ac
             games.WriteInt(player.basePtr + player.explosive, 0);
         }
 
-        public void FrezX()
+        public void FrezX(float x)
         {
-            games.WriteFloat(player.basePtr + player.X, player.getX());
+            games.WriteFloat(player.basePtr + player.X, x);
         }
 
         public void UnfrezX()
@@ -85,9 +85,9 @@ namespace experimental_hack_ac
             games.WriteFloat(player.basePtr + player.X, player.getX());
         }
 
-        public void FrezY()
+        public void FrezY(float y)
         {
-            games.WriteFloat(player.basePtr + player.Y, player.getY());
+            games.WriteFloat(player.basePtr + player.Y, y);
         }
 
         public void UnfrezY()
@@ -95,9 +95,9 @@ namespace experimental_hack_ac
             games.WriteFloat(player.basePtr + player.Y, player.getY());
         }
 
-        public void FrezZ()
+        public void FrezZ(float z)
         {
-            games.WriteFloat(player.basePtr + player.Z, player.getZ());
+            games.WriteFloat(player.basePtr + player.Z, z);
         }
 
         public void UnfrezZ()
