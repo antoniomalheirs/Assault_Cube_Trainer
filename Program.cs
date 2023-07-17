@@ -15,9 +15,9 @@ namespace experimental_hack_ac
     {
         static int pid;
         static bool pad0, pad1, pad2, pad3, pad4, pad5, pad6;
-        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun;
+        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun;
 
-        static CancellationTokenSource heatlhtask, shieldtask, bulletstask, pbulletstask;
+        static CancellationTokenSource heatlhtask, shieldtask, bulletstask, pbulletstask, explosivetask, locationtask;
         static FunctionsHack injetor;
         static ConsoleKeyInfo key;
 
@@ -142,18 +142,18 @@ namespace experimental_hack_ac
                                 // Inverte o estado da função
                                 pad4 = !pad4;
 
-                                if (pad4)
+                                if (!explosiverun)
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Explosive infinito ativada");
-                                    injetor.Frezexplosive(10);
+                                    Explosiverun();
                                 }
                                 else
                                 {
                                     Console.Clear();
                                     injetor.Frezexplosive(0);
                                     Console.WriteLine("Explosive desativada");
-                                    injetor.Unfrezexplosive();
+                                    StopExplosiverun();
                                 }
                             }
 
@@ -162,17 +162,17 @@ namespace experimental_hack_ac
                                 // Inverte o estado da função
                                 pad5 = !pad5;
 
-                                if (pad5)
+                                if (!locationrun)
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Posicao travada ativada");
-                                    injetor.FrezX(); injetor.FrezY(); injetor.FrezZ();
+                                    Locationrun(currentp.getX(), currentp.getY(), currentp.getZ());
                                 }
                                 else
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Posicao desativada");
-                                    injetor.UnfrezX(); injetor.UnfrezY(); injetor.UnfrezZ();
+                                    StopLocationrun();
                                 }
                             }
 
@@ -323,6 +323,64 @@ namespace experimental_hack_ac
                 pbulletstask.Cancel();
                 pbulletstask.Dispose();
                 pbulletstask = null;
+            }
+        }
+
+        private static void Explosiverun()
+        {
+            explosivetask = new CancellationTokenSource();
+            CancellationToken Kcancel = explosivetask.Token;
+            explosiverun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    injetor.Frezexplosive(10);
+                    Thread.Sleep(100);
+                }
+
+                explosiverun = false;
+            });
+        }
+
+        private static void StopExplosiverun()
+        {
+            if (explosiverun)
+            {
+                injetor.Frezexplosive(0);
+                explosivetask.Cancel();
+                explosivetask.Dispose();
+                explosivetask = null;
+            }
+        }
+
+        private static void Locationrun(float x, float y, float z)
+        {
+            locationtask = new CancellationTokenSource();
+            CancellationToken Kcancel = locationtask.Token;
+            locationrun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    injetor.FrezX(x); injetor.FrezY(y); injetor.FrezZ(z);
+                    //Console.Clear();
+                    Thread.Sleep(500);
+                }
+
+                locationrun = false;
+            });
+        }
+
+        private static void StopLocationrun()
+        {
+            if (locationrun)
+            {
+                locationtask.Cancel();
+                locationtask.Dispose();
+                locationtask = null;
             }
         }
     }

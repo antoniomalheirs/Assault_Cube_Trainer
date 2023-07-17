@@ -43,7 +43,6 @@ namespace experimental_hack_ac
             games.OpenProcess(getPid());
             basePtr = game.ReadPointer(game.GetModuleBase(".exe"), playerobject); 
         }
-
         public int getHealth()
         {
             healthh = game.ReadInt(basePtr, health);
