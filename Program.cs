@@ -15,9 +15,9 @@ namespace experimental_hack_ac
     {
         static int pid;
         static bool pad0, pad1, pad2, pad3, pad4, pad5, pad6;
-        static bool processRunning, healthrun;
+        static bool processRunning, healthrun, shieldrun;
 
-        static CancellationTokenSource heatlhtask;
+        static CancellationTokenSource heatlhtask, shieldtask;
         static FunctionsHack injetor;
         static ConsoleKeyInfo key;
 
@@ -85,18 +85,17 @@ namespace experimental_hack_ac
                                 // Inverte o estado da função
                                 pad1 = !pad1;
 
-                                if (pad1)
+                                if (!shieldrun)
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Shield infinito ativada");
-                                    injetor.Frezshield(100);
+                                    Shieldrun();
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    injetor.Frezshield(0);
                                     Console.WriteLine("Shield desativada");
-                                    injetor.Unfrezshield();
+                                    StopShieldrun();
                                 }
                             }
 
@@ -239,6 +238,35 @@ namespace experimental_hack_ac
                 heatlhtask.Cancel();
                 heatlhtask.Dispose();
                 heatlhtask = null;
+            }
+        }
+
+        private static void Shieldrun()
+        {
+            shieldtask = new CancellationTokenSource();
+            CancellationToken Kcancel = shieldtask.Token;
+            shieldrun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    injetor.Frezshield(100);
+                    Thread.Sleep(100);
+                }
+
+                shieldrun = false;
+            });
+        }
+
+        private static void StopShieldrun()
+        {
+            if (shieldrun)
+            {
+                injetor.Frezshield(100);
+                shieldtask.Cancel();
+                shieldtask.Dispose();
+                shieldtask = null;
             }
         }
     }
