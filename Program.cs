@@ -15,9 +15,9 @@ namespace experimental_hack_ac
     {
         static int pid;
         static bool pad0, pad1, pad2, pad3, pad4, pad5, pad6;
-        static bool processRunning, healthrun, shieldrun;
+        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun;
 
-        static CancellationTokenSource heatlhtask, shieldtask;
+        static CancellationTokenSource heatlhtask, shieldtask, bulletstask, pbulletstask;
         static FunctionsHack injetor;
         static ConsoleKeyInfo key;
 
@@ -88,13 +88,13 @@ namespace experimental_hack_ac
                                 if (!shieldrun)
                                 {
                                     Console.Clear();
-                                    Console.WriteLine("Shield infinito ativada");
+                                    Console.WriteLine("Shield infinito ativado");
                                     Shieldrun();
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    Console.WriteLine("Shield desativada");
+                                    Console.WriteLine("Shield desativado");
                                     StopShieldrun();
                                 }
                             }
@@ -104,18 +104,17 @@ namespace experimental_hack_ac
                                 // Inverte o estado da função
                                 pad2 = !pad2;
 
-                                if (pad2)
+                                if (!bulletsrun)
                                 {
                                     Console.Clear();
-                                    Console.WriteLine("Bullets infinitas ativada");
-                                    injetor.Frezbullets(60);
+                                    Console.WriteLine("Bullets infinitas ativado");
+                                    Bulletsrun();
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    injetor.Frezbullets(25);
-                                    Console.WriteLine("Bullets desativada");
-                                    injetor.Unfrezbullets();
+                                    Console.WriteLine("Bullets desativadas");
+                                    StopBulletsrun();
                                 }
                             }
 
@@ -124,18 +123,17 @@ namespace experimental_hack_ac
                                 // Inverte o estado da função
                                 pad3 = !pad3;
 
-                                if (pad3)
+                                if (!pbulletsrun)
                                 {
                                     Console.Clear();
-                                    Console.WriteLine("Pistol Bullets infinito ativada");
-                                    injetor.Frezpbullets(30);
+                                    Console.WriteLine("Pistol bullets infinitas ativado");
+                                    Pbulletsrun();
                                 }
                                 else
                                 {
                                     Console.Clear();
-                                    injetor.Frezpbullets(15);
-                                    Console.WriteLine("Pistol Bullets desativada");
-                                    injetor.Unfrezpbullets();
+                                    Console.WriteLine("Pistol bullets desativado");
+                                    StopPbulletsrun();
                                 }
                             }
 
@@ -263,10 +261,68 @@ namespace experimental_hack_ac
         {
             if (shieldrun)
             {
-                injetor.Frezshield(100);
+                injetor.Frezshield(0);
                 shieldtask.Cancel();
                 shieldtask.Dispose();
                 shieldtask = null;
+            }
+        }
+
+        private static void Bulletsrun()
+        {
+            bulletstask = new CancellationTokenSource();
+            CancellationToken Kcancel = bulletstask.Token;
+            bulletsrun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    injetor.Frezbullets(30);
+                    Thread.Sleep(100);
+                }
+
+                bulletsrun = false;
+            });
+        }
+
+        private static void StopBulletsrun()
+        {
+            if (bulletsrun)
+            {
+                injetor.Frezbullets(20);
+                bulletstask.Cancel();
+                bulletstask.Dispose();
+                bulletstask = null;
+            }
+        }
+
+        private static void Pbulletsrun()
+        {
+            pbulletstask = new CancellationTokenSource();
+            CancellationToken Kcancel = pbulletstask.Token;
+            pbulletsrun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    injetor.Frezpbullets(10);
+                    Thread.Sleep(100);
+                }
+
+                pbulletsrun = false;
+            });
+        }
+
+        private static void StopPbulletsrun()
+        {
+            if (pbulletsrun)
+            {
+                injetor.Frezpbullets(5);
+                pbulletstask.Cancel();
+                pbulletstask.Dispose();
+                pbulletstask = null;
             }
         }
     }
