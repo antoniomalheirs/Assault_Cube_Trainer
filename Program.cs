@@ -11,7 +11,7 @@ using System.ComponentModel.Design;
 
 namespace experimental_hack_ac
 {
-    class Program
+    internal class Program
     {
         static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun, listarun, enemyliferun, enemylocationrun;
 
