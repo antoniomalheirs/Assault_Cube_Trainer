@@ -13,9 +13,9 @@ namespace experimental_hack_ac
 {
     class Program
     {
-        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun, listarun;
+        static bool processRunning, healthrun, shieldrun, bulletsrun, pbulletsrun, explosiverun, locationrun, listarun, enemyliferun;
 
-        static CancellationTokenSource? heatlhtask, shieldtask, bulletstask, pbulletstask, explosivetask, locationtask, listatask;
+        static CancellationTokenSource heatlhtask, shieldtask, bulletstask, pbulletstask, explosivetask, locationtask, listatask, enemylifetask;
         static FunctionsHack injetor;
         static Entitylist enemys;
         static ConsoleKeyInfo key;
@@ -23,7 +23,7 @@ namespace experimental_hack_ac
         static void Main()
         {
             int pid;
-            bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false;
+            bool pad0 = false, pad1 = false, pad2 = false, pad3 = false, pad4 = false, pad5 = false, pad6 = false, pad7 = false;
 
             Process gameProcess;
             Player currentp = new Player();
@@ -96,7 +96,7 @@ namespace experimental_hack_ac
                                 {
                                     Console.Clear();
                                     Console.WriteLine("Shield desativado");
-                                    StopShieldrun();
+                                    StopShieldrun(shieldtask);
                                 }
                             }
 
@@ -195,10 +195,29 @@ namespace experimental_hack_ac
                                     StopListarun();
                                 }
                             }
+
+                            if (key.Key == ConsoleKey.NumPad7)
+                            {
+                                // Inverte o estado da função
+                                pad7 = !pad7;
+
+                                if (!enemyliferun)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Enemy life ativada");
+                                    Enemyliferun();
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("Enemy life desativada");
+                                    StopEnemyliferun();
+                                }
+                            }
                         }
                         while (processRunning);
 
-                        pad0 = false; pad1 = false; pad2 = false; pad3 = false; pad4 = false; pad5 = false; pad6 = false;
+                        pad0 = false; pad1 = false; pad2 = false; pad3 = false; pad4 = false; pad5 = false; pad6 = false; pad7 = false;
                         injetor.Unfrezhealth(); injetor.Unfrezshield(); injetor.Unfrezbullets(); injetor.Unfrezpbullets(); injetor.Unfrezexplosive(); injetor.UnfrezX(); injetor.UnfrezY(); injetor.UnfrezZ();
                         Console.Clear();
                     }
@@ -259,7 +278,7 @@ namespace experimental_hack_ac
             });
         }
 
-        private static void StopShieldrun()
+        private static void StopShieldrun(CancellationTokenSource? shieldtask)
         {
             if (shieldrun)
             {
@@ -411,6 +430,35 @@ namespace experimental_hack_ac
                 listatask.Cancel();
                 listatask.Dispose();
                 listatask = null;
+            }
+        }
+
+        private static void Enemyliferun()
+        {
+            enemylifetask = new CancellationTokenSource();
+            CancellationToken Kcancel = enemylifetask.Token;
+            enemyliferun = true;
+
+            Task.Run(() =>
+            {
+                while (!Kcancel.IsCancellationRequested)
+                {
+                    Console.Clear();
+                    enemys.setEntitylifeList(10);
+                    Thread.Sleep(500);
+                }
+
+                enemyliferun = false;
+            });
+        }
+
+        private static void StopEnemyliferun()
+        {
+            if (enemyliferun)
+            {
+                enemylifetask.Cancel();
+                enemylifetask.Dispose();
+                enemylifetask = null;
             }
         }
     }

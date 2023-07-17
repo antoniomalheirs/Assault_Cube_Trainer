@@ -11,9 +11,9 @@ namespace experimental_hack_ac
     {
         private Mem game = new Mem();
 
-        private IntPtr enemyPtr;
+        public IntPtr enemyPtr;
         private string namee = "";
-        private int healthh;
+        public int healthh;
         private int teamm;
         private float Xx;
         private float Yy;
